@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * A Tropo SMS script that queries the ScraperWiki API for flight details.
+ */
+
 // Constants used to access Scraperwiki API.
 define("SCRAPERWIKI_API_URL", "http://api.scraperwiki.com/api/1.0/datastore/sqlite");
 define("SCRAPERWIKI_FORMAT", "jsondict");
