@@ -26,7 +26,7 @@ $direction = $message[1];
 try {
 	$flight_info = getFlightInfo($flight_num, $date, $direction);
 	if(count($flight_info) == 0) {
-		say("No information found for flight $flight_num on $date");
+		say("No information found for flight $flight_num on $date.");
 	}
 	else {
 		$leaveorarrive = (strtolower($direction) == "d") ? "leaving for" : "arriving from";
