@@ -18,10 +18,20 @@ function getFlightInfo($flight_num, $date, $direction) {
 // Set the date.
 $date = date("m.d.y");
 
-// Get flight number entered by user.
-$message = explode(" ", $currentCall->initialText);
-$flight_num = $message[0];
-$direction = $message[1];
+if($currentCall->channel == "VOICE") {
+	say("Thank you for caling my test app.");
+	$flight = ask("Please say or enter your numeric flight number.", array("choices" => "[1-4]", "attempts" => 3, "timeout" => 5));
+	$flight_type = ask("Is your flight an arrival or departure?", array("choices" => "arrival, departure", "attempts" => 3, "timeout" => 5));
+	
+	$flight_num = $flight->value;
+	$direction = $flight_type->value;
+}
+else {
+	// Get flight number entered by user.
+	$message = explode(" ", $currentCall->initialText);
+	$flight_num = $message[0];
+	$direction = $message[1];
+}
 
 try {
 	$flight_info = getFlightInfo($flight_num, $date, $direction);
