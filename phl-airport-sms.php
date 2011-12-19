@@ -21,7 +21,7 @@ function formatResponse($direction, $flight_info, $channel) {
 	
 	// Determine if the flight is an arrival or departure.
 	$leaveorarrive = (strtolower($direction) == "d") ? "leaving for" : "arriving from";
-	$gate = (strtolower($direction) == "d") ? " at " : " from ";
+	$gate = (strtolower($direction) == "d") ? " from Gate " : " at Gate ";
 	
 	// Format the flight number for the channel used.
 	$flight_num = $channel == "VOICE" ? implode(" ", str_split($flight_info->flight_num)) : $flight_info->flight_num;
