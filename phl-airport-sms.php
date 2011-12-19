@@ -21,7 +21,7 @@ function formatResponse($direction, $flight_info, $channel) {
 	
 	// Determine if the flight is an arrival or departure.
 	$leaveorarrive = (strtolower($direction) == "d") ? "leaving for" : "arriving from";
-	$gate = (strtolower($direction) == "d") ? " from Gate " : " at Gate ";
+	$gate = (strtolower($direction) == "d") ? " from " : " at ";
 	
 	// Format the flight number for the channel used.
 	$flight_num = $channel == "VOICE" ? implode(" ", str_split($flight_info->flight_num)) : $flight_info->flight_num;
@@ -31,7 +31,7 @@ function formatResponse($direction, $flight_info, $channel) {
 	$remarks = ucwords(strtolower($flight_info->remarks));
 	
 	// Build response to user.
-	$say = $flight_info->airline . " Flight " . $flight_num . " $leaveorarrive " . $destination . " at " . $flight_info->time . $gate . $flight_info->gate . ": " . $remarks;
+	$say = $flight_info->airline . " Flight " . $flight_num . " $leaveorarrive " . $destination . " at " . $flight_info->time . "$gate Gate " . $flight_info->gate . ": " . $remarks;
 	return $say;
 }
 
