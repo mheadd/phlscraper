@@ -1,4 +1,7 @@
-Airport Flight Info Scraper
+Airport Flight Info API
 ===========================
 
-ScraperWiki + Tropo for SMS enabled flight information from the PHL International Airport.
+Scraping tools and an API for flight information from the Philadelphia International Airport.
+
+Info - http://phlair.infp
+API - http://api.phlair.info
