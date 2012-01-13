@@ -6,23 +6,50 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+// Utility function to check if a value is set.
+function isSet(value) {
+	if(typeof(value) === 'undefined') {
+		return false;
+	}
+	else if (value === null) {
+		return false;
+	}
+	else if(value == '') {
+		return false;
+	}
+	return true;
+} 
+
 function flightData(flights) {
-	
+	console.log(flights);
 	// Remove previous flight info.
 	$("#flight-info").each(function() {
 		$("ul").remove();
 	});
 	
-	// Reset input.
+	// Reset input field.
 	$("#flight_num").val("");
 	
 	// Loop through flights array and format information to append to div.
 	for(var i=0; i< flights.length; i++) {
+		
+		var location, locationType;
+		
+		if(!isSet(flights[i].origin)) {
+			location = flights[i].destination;
+			locationType = "Destination";
+		}
+		
+		else {
+			location = flights[i].origin;
+			locationType = "Origin";
+		}
+		
 		var flight = "<ul class=\"flight\">"
 		flight += "<li>Flight number: " + flights[i].flight_number + "</li>";
 		flight += "<li>Date: " + flights[i].date + "</li>";
 		flight += "<li>Airline: " + flights[i].airline + "</li>";
-		flight += "<li>Origin: " + flights[i].origin + "</li>";
+		flight += "<li>" + locationType + ": " + location + "</li>";
 		flight += "<li>Time: " + flights[i].time + "</li>";
 		flight += "<li>Gate: " + flights[i].gate + "</li>";
 		flight += "<li>Remarks: " + flights[i].remarks + "</li>";
@@ -104,7 +131,7 @@ legend {
 </head>
 <body>
 	<div id="search_form">
-		<form name="search" id="searchFlights" action="form.html">
+		<form name="search" id="searchFlights" action="index.html">
 		<fieldset>
 		<legend>PHL FLight Information Lookup</legend>
 			<input type="text" id="flight_num" size="15" value="Flight number"/> &nbsp;
@@ -114,5 +141,11 @@ legend {
 		</fieldset>
 		</form>
 	</div>
+	<div>
+		<center>
+			<p>Powered by the <a href="http://api.phlair.info">PHLAIR API</a>. API Documentation <a href="https://github.com/mheadd/phlscraper/wiki/API-Documentation">here</a>.</p>
+		</center>
+	</div>
+	
 </body>
 </html>
