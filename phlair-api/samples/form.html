@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PHL FLight Information Lookup</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+function flightData(flights) {
+	
+	// Remove previous flight info.
+	$("#flight-info").each(function() {
+		$("ul").remove();
+	});
+	
+	// Reset input.
+	$("#flight_num").val("");
+	
+	// Loop through flights array and format information to append to div.
+	for(var i=0; i< flights.length; i++) {
+		var flight = "<ul class=\"flight\">"
+		flight += "<li>Flight number: " + flights[i].flight_number + "</li>";
+		flight += "<li>Date: " + flights[i].date + "</li>";
+		flight += "<li>Airline: " + flights[i].airline + "</li>";
+		flight += "<li>Origin: " + flights[i].origin + "</li>";
+		flight += "<li>Time: " + flights[i].time + "</li>";
+		flight += "<li>Gate: " + flights[i].gate + "</li>";
+		flight += "<li>Remarks: " + flights[i].remarks + "</li>";
+		flight += "<ul>";
+	}
+	
+	// Append fliht information to div.
+	$("#flight-info").append(flight);
+}
+
+$(document).ready(function() {
+	
+	$("#flight_num").focus(function() {
+		$(this).val("");
+	});
+	
+	$("#searchFlights").submit(function(event) {		
+		 
+		// Prevent default form submission.
+		event.preventDefault();
+		
+		// Remove existing script reference.
+		$("#flightjs").remove();
+		
+		// Build URL to phlair API
+		var phlairURL = "http://api.phlair.info/1.0";
+		var flight_type = $('input:radio[name=flight_type]:checked').val();
+		var flight_num = $("#flight_num").val();
+		var url = phlairURL + "/" + flight_type + "/" + flight_num + "/flightData";
+		
+		var script = document.createElement("script");        
+		script.setAttribute("src",url);
+		script.setAttribute("id", "flightjs");
+		script.setAttribute("type","text/javascript");             
+		$("head").append(script);
+		
+		// Remove previous flight info.
+		$("#flight-info").each(function() {
+			$("ul").remove();
+		});
+			
+		// Default text, overwritten when flightData() method executes.
+		$("#flight-info").append("<ul class=\"flight\"><li>No information available for flight " + flight_num + ".</li></ul>");
+		 
+	});
+		
+});
+</script>
+
+<style  type="text/css">
+
+body {
+	padding: 10px;
+	margin-left: 10%;
+	margin-right: 10%;
+	font-family: Sans-serif;
+}
+
+fieldset {
+	background-color: #F0F0F0 ;
+}
+
+legend {
+	font-size: 200%;
+	font-weigh: bold;
+}
+
+.flight {
+	padding: 5px;
+	margin-left: 15px;
+}
+
+.flight li {
+	margin-top: 3px;
+}
+
+</style>
+
+</head>
+<body>
+	<div id="search_form">
+		<form name="search" id="searchFlights" action="form.html">
+		<fieldset>
+		<legend>PHL FLight Information Lookup</legend>
+			<input type="text" id="flight_num" size="15" value="Flight number"/> &nbsp;
+			<input type="radio" name="flight_type" value="arrivals" />Arrival <input type="radio" name="flight_type" value="departures" />Departure<br/>
+			<input type="submit" name="submit" id="submit_btn" value="Check status" />
+			<div id="flight-info"></div>
+		</fieldset>
+		</form>
+	</div>
+</body>
+</html>
